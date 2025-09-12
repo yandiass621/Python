@@ -1,0 +1,31 @@
+qtdNotas = int(input("Insira a Quantidade de Notas Que Vai Declarar: "))
+
+# Lista que irá armazenar as notas inseridas
+notas = []
+
+# Estrutura de repetição
+for i in range(qtdNotas):
+    nota = float(input(f"Digite a {i + 1}º nota : "))
+    notas.append(nota)
+
+
+print("")
+print(f"Notas inseridas: {notas}")
+
+# Função para calculo da média
+def calMed (notas):
+  media = sum(notas)/len(notas)
+  return media
+
+media = calMed(notas)
+
+# Estrutura de condição
+if media >= 7:
+    print("")
+    print(f"Sua nota foi :{media}")
+    print("Você foi Aprovado!")
+
+else:
+    print("")
+    print(f"A Média das Suas Notas Foram: {media}")
+    print("Você foi Reprovado!")
