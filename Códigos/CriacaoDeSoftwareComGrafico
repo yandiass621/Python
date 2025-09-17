@@ -1,0 +1,70 @@
+import matplotlib.pyplot as plt
+
+# Classe para representar um livro
+class Livro:
+  def __init__(self,titulo, autor,genero,ano,quantidade_disponivel):
+    self.titulo = titulo
+    self.autor = autor
+    self.genero = genero
+    self.ano = ano
+    self.quantidade_disponivel = quantidade_disponivel
+  def __str__(self):
+    return f"Livro: {self.titulo} - Autor: {self.autor} - Genêro: {self.genero} - Ano : {self.ano} - Quantidade Disponivel: {self.quantidade_disponivel}"
+
+# Criar uma lista de livros
+biblioteca = []
+
+# Criar lista para armazenar a quantidade disponivel na loja
+estoque = []
+
+# Função para adicionar um livro à biblioteca
+def adicionar_livro(titulo,autor,genero,ano,quantidade_disponivel):
+  novo_livro = Livro(titulo,autor,genero,ano,quantidade_disponivel)
+  biblioteca.append(novo_livro) # Adiciona o livro a lista da biblioteca
+  estoque.append(quantidade_disponivel) # Adiciona à lista de estoque
+  print(f"Livro '{titulo}' foi adicionado à biblioteca.")
+
+# Função para listar todos os livros da biblioteca
+def listar_livros():
+  print("Livros na biblioteca:")
+  for livro in biblioteca:
+    print(livro)
+
+# Adicionar alguns livros na biblioteca
+adicionar_livro("A Culpa é das Estrelas", "John Green","Romance",2012, 5)
+adicionar_livro("O Poder do Hábito", "Charles Duhigg","Suspense", 2012, 2)
+adicionar_livro("O Alquimista", "Paulo Coelho","Ficção" ,2011,3)
+adicionar_livro("O Senhor dos Anéis", "J.R.R. Tolkien","Ficção", 1954, 7)
+adicionar_livro("1984", "George Orwell","Bibliografia", 1949, 8)
+adicionar_livro("O Pequeno Príncipe", "Antoine de Saint-Exupéry","Ficção", 1943, 6)
+adicionar_livro("Dom Casmurro", "Machado de Assis","História", 1899,9)
+
+# Listar todos os livros da biblioteca
+listar_livros()
+
+# Criar um gráfico de livros por ano
+from collections import defaultdict
+
+# Criar um dicionário com estoque por ano
+estoque_por_ano = defaultdict(int)
+for livro in biblioteca:
+  estoque_por_ano[livro.ano] += livro.quantidade_disponivel
+
+# Organizar dados por ano
+anos = sorted(estoque_por_ano.keys())
+quantidades = [estoque_por_ano[ano] for ano in anos]
+
+# Criar gráfico de linha
+plt.figure(figsize = (10,5))
+plt.plot(anos, quantidades, marker='o', linestyle='-')
+plt.xlabel("Ano de Publicação")
+plt.ylabel("Quantidade Disponível")
+plt.title("Estoque da Biblioteca por Ano de Publicação")
+
+# Adicionar rotulos aos pontos de dados
+for i, valor in enumerate(quantidades):
+  plt.text(anos[i], valor,str (valor), ha = 'center', va = 'bottom')
+
+plt.grid (True)
+# Mostrar o gráfico
+plt.show()
