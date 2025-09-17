@@ -1,0 +1,35 @@
+while True:
+    print("Escolha qual operação gostaria de fazer? ")
+    opr = input("1 - Adição\n2 - Subtração\n3 - Multiplicação\n4 - Divisão\n5 - Sair\n")
+
+    if opr == "5":
+      print("Obrigado por utilizar a calculadora.Tenha um bom dia!")
+      break
+
+    if opr not in ("1","2","3","4"):
+      print("Opção inválida")
+      continue
+
+    try:
+        num1 = float(input("Digite o primeiro número: "))
+        num2 = float(input("Digite o segundo número: "))
+
+        if opr == "1":
+          resultado = num1 + num2
+          print("O valor da soma é ",resultado)
+        elif opr == "2":
+          resultado = num1 - num2
+          print("O valor da subtração é ",resultado)
+        elif opr == "3":
+          mult = num1 * num2
+          resultado = mult
+          print("O valor da multiplicação é ",resultado)
+        elif opr == "4":
+
+            if num2 == 0:
+              print("Desculpe!Mas não é possível dividir um número por 0.")
+            else:
+              resultado = num1 / num2
+              print("O valor da divisão é ",resultado)
+    except ValueError:
+        print("Erro: Digite apenas números!")
