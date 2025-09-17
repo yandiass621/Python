@@ -1,9 +1,7 @@
 qtdNotas = int(input("Insira a Quantidade de Notas Que Vai Declarar: "))
 
-# Lista que irá armazenar as notas inseridas
 notas = []
 
-# Estrutura de repetição
 for i in range(qtdNotas):
     nota = float(input(f"Digite a {i + 1}º nota : "))
     notas.append(nota)
@@ -12,14 +10,13 @@ for i in range(qtdNotas):
 print("")
 print(f"Notas inseridas: {notas}")
 
-# Função para calculo da média
-def calMed (notas):
+
+def calculo_de_media (notas):
   media = sum(notas)/len(notas)
   return media
 
-media = calMed(notas)
+media = calculo_de_media(notas)
 
-# Estrutura de condição
 if media >= 7:
     print("")
     print(f"Sua nota foi :{media}")
