@@ -1,0 +1,47 @@
+# Passo 1: Importar bibliotecas necessárias
+import tensorflow as tf
+import pandas as pd
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import classification_report, accuracy_score
+
+# Passo 2: Carregar o conjunto de dados Iris
+iris = load_iris()
+X = iris.data  # Características (comprimento/largura das pétalas e sépalas)
+y = iris.target  # Rótulos (espécies das flores)
+
+# Passo 3: Dividir o conjunto em dados de treino e teste
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Passo 4: Normalizar os dados para melhorar o desempenho da rede neural
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)  # Ajusta e transforma os dados de treino
+X_test = scaler.transform(X_test)        # Transforma os dados de teste com os mesmos parâmetros
+
+# Passo 5: Construir o modelo de rede neural com TensorFlow/Keras
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(10, activation='relu', input_shape=(4,)),  # Camada oculta com 10 neurônios
+    tf.keras.layers.Dense(10, activation='relu'),                    # Segunda camada oculta
+    tf.keras.layers.Dense(3, activation='softmax')                   # Camada de saída para 3 classes
+])
+
+# Compilar o modelo com otimizador, função de perda e métrica de precisão
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',  # Usado para classificação multiclasse com rótulos inteiros
+              metrics=['accuracy'])
+
+# Passo 6: Treinar o modelo com os dados de treinamento
+model.fit(X_train, y_train, epochs=50, batch_size=8, verbose=1)
+
+# Passo 7: Avaliar o modelo com os dados de teste
+loss, accuracy = model.evaluate(X_test, y_test, verbose=0)
+print(f"\n🔍 Precisão no conjunto de teste: {accuracy:.2f}")
+
+# Passo 8: Fazer previsões com o modelo treinado
+y_pred_probs = model.predict(X_test)           # Probabilidades previstas para cada classe
+y_pred = y_pred_probs.argmax(axis=1)           # Escolhe a classe com maior probabilidade
+
+# Exibir relatório de classificação
+print("\n📊 Relatório de Classificação:")
+print(classification_report(y_test, y_pred, target_names=iris.target_names))
